@@ -1,15 +1,28 @@
 const types = {
     INPUT_TASK: 'INPUT_TASK',
-    ADD_TASK: 'ADD_TASK',
-    DELETE_TASK: 'DELETE_TASK',
-    UPDATE_TASK: 'UPDATE_TASK'
+    UPDATE_TASKLIST: 'UPDATE_TASKLIST'
 };
 
 const dispatcher = {
     inputTask: (task) => ({type: types.INPUT_TASK, payload: task}),
-    addTask: (task) => ({type: types.ADD_TASK, payload: task}),
-    deleteTask: (taskId) => ({type: types.DELETE_TASK, payload: taskId}),
-    updateTask: (taskId, task) => ({type: types.UPDATE_TASK, payload: {taskId, task}})
+    addTask: (task) => (dispatch, getState) => {
+        const taskList = [...getState().task.taskList];
+        taskList.push({id: taskList.length, task});
+        dispatch({type: types.UPDATE_TASKLIST, payload: taskList});
+        return taskList;
+    },
+    deleteTask: (taskId) => (dispatch, getState) => {
+        const taskList = [...getState().task.taskList].filter(task => task.id !== +taskId);
+        dispatch({type: types.UPDATE_TASKLIST, payload: taskList});
+        return taskList;
+    },
+    updateTask: (taskId, task) => (dispatch, getState) => {
+        const taskList = [...getState().task.taskList];
+        const selectedTask = taskList.find((task => task.id === +taskId));
+        selectedTask.task = task;
+        dispatch({type: types.UPDATE_TASKLIST, payload: taskList});
+        return taskList;
+    }
 };
 
 export default {

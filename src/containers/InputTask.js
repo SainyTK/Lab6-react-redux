@@ -17,7 +17,7 @@ class InputTask extends React.Component {
 
     handleChange = (e) => {
         const { value } = e.target;
-        this.props.inputTask({ task: value })
+        this.props.inputTask(value)
     }
 
     addTask = () => {

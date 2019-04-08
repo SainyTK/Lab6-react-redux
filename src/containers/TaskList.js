@@ -12,8 +12,8 @@ class TaskList extends React.Component {
                 {taskList.map((task, id) => (
                     <li key={id}>
                         {task.id} : {task.task}
-                        <button id={id} onClick={this.handleUpdate}>update</button>
-                        <button id={id} onClick={this.handleDelete}>delete</button>
+                        <button id={task.id} onClick={this.handleUpdate}>update</button>
+                        <button id={task.id} onClick={this.handleDelete}>delete</button>
                     </li>
                 ))}
             </ul>
